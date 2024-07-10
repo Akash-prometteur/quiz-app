@@ -131,7 +131,7 @@ const quizQuestions = quizQuestionsList.forEach((quizQuestion, index) => {
             ${quizQuestion.title}
         </p>
         <div class="quiz-options">
-            A. <button class="btn">${optionA}</button><br>
+            A. <button class="btn" onclick="checkAnswer('${optionA}')">${optionA}</button><br>
             B. <button class="btn">${optionB}</button><br>
             C. <button class="btn">${optionC}</button><br>
             D. <button class="btn">${optionD}</button><br>
@@ -145,6 +145,12 @@ document.querySelector(".js-quiz-questions").innerHTML = quizQuestionHTML;
 
 let score;
 
-function checkAnswer () {
+function checkAnswer(option) {
+    console.log(option);
+  let correctOption = "";
+  quizQuestionsList.map((options) => {
     
+    console.log(options.options[4].correctAnswer);
+  });
+  console.log(correctOption);
 }
