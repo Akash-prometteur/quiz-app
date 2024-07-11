@@ -70,10 +70,10 @@ const quizQuestionsList = [
     options: [
       { a: "Prints an exception error", correct: false },
       { b: "Prints an overflow error", correct: false },
-      { c: "Displays 'Infinity'", correct: true },
+      { c: "Displays Infinity", correct: true },
       { d: "Prints the value as such", correct: false },
     ],
-    correctAnswer: "Displays 'Infinity'",
+    correctAnswer: "Displays Infinity",
   },
   {
     title:
@@ -110,8 +110,11 @@ const quizQuestionsList = [
   },
 ];
 
+let score = 0;
+let currentQuestionIndex = 0;
+let selectedOption = 0;
+
 function questionHtml(questionIdex) {
-  console.log(quizQuestionsList[questionIdex].correctAnswer);
   let quizQuestionHTML = "";
 
   const optionA =
@@ -177,14 +180,23 @@ function questionHtml(questionIdex) {
 
 // document.querySelector(".js-quiz-questions").innerHTML = quizQuestionHTML;
 
-let score = 0;
-let currentQuestionIndex = 0;
-let selectedOption = 0;
-
 function ShowQuestion() {
   score = 0;
   currentQuestionIndex = 0;
   questionHtml(currentQuestionIndex);
+}
+
+function showResult() {
+  if (selectedOption >= quizQuestionsList.length) {
+    document.querySelector(
+      ".js-quiz-questions"
+    ).innerHTML = `You have scored ${score} out of ${quizQuestionsList.length}`;
+    // alert(`You have scored ${score} out of ${quizQuestionsList.length}`);
+    // score = 0;
+    // currentQuestionIndex = 0;
+    // selectedOption = 0;
+    // ShowQuestion(currentQuestionIndex);
+  }
 }
 
 function checkAnswer(option, correctAnswer) {
@@ -194,11 +206,9 @@ function checkAnswer(option, correctAnswer) {
   alert(`Your Current score is ${score} / ${quizQuestionsList.length}.`);
   selectedOption++;
   currentQuestionIndex++;
-  questionHtml(currentQuestionIndex)
+  showResult();
+  questionHtml(currentQuestionIndex);
   console.log(selectedOption);
-  if (selectedOption >= quizQuestionsList.length) {
-    
-  }
 }
 
 ShowQuestion();
