@@ -128,7 +128,7 @@ function questionHtml(questionIdex) {
 
   quizQuestionHTML += `
     <div>
-      <p>Question ${questionIdex + 1}:</p> 
+      <p>Question ${questionIdex + 1} of ${quizQuestionsList.length}:</p> 
       <p class="title">${quizQuestionsList[questionIdex].title}</p>
       <div class="quiz-options">
         A. <button class="btn" onclick="checkAnswer('${optionA.a}', '${
@@ -149,37 +149,6 @@ function questionHtml(questionIdex) {
   document.querySelector(".js-quiz-questions").innerHTML = quizQuestionHTML;
 }
 
-// let quizQuestionHTML = "";
-
-// quizQuestionsList.forEach((quizQuestion, index) => {
-//   const optionA = quizQuestion.options.find((opt) => opt.a) || {};
-//   const optionB = quizQuestion.options.find((opt) => opt.b) || {};
-//   const optionC = quizQuestion.options.find((opt) => opt.c) || {};
-//   const optionD = quizQuestion.options.find((opt) => opt.d) || {};
-
-//   quizQuestionHTML += `
-//     <div>
-//       <p>Question ${index + 1}:</p>
-//       <p class="title">${quizQuestion.title}</p>
-//       <div class="quiz-options">
-//         A. <button class="btn" onclick="checkAnswer('${optionA.a}', '${
-//     quizQuestion.correctAnswer
-//   }')">${optionA.a}</button><br>
-//         B. <button class="btn" onclick="checkAnswer('${optionB.b}', '${
-//     quizQuestion.correctAnswer
-//   }')">${optionB.b}</button><br>
-//         C. <button class="btn" onclick="checkAnswer('${optionC.c}', '${
-//     quizQuestion.correctAnswer
-//   }')">${optionC.c}</button><br>
-//         D. <button class="btn" onclick="checkAnswer('${optionD.d}', '${
-//     quizQuestion.correctAnswer
-//   }')">${optionD.d}</button><br>
-//       </div>
-//     </div>`;
-// });
-
-// document.querySelector(".js-quiz-questions").innerHTML = quizQuestionHTML;
-
 function ShowQuestion() {
   score = 0;
   currentQuestionIndex = 0;
@@ -191,11 +160,6 @@ function showResult() {
     document.querySelector(
       ".js-quiz-questions"
     ).innerHTML = `You have scored ${score} out of ${quizQuestionsList.length}`;
-    // alert(`You have scored ${score} out of ${quizQuestionsList.length}`);
-    // score = 0;
-    // currentQuestionIndex = 0;
-    // selectedOption = 0;
-    // ShowQuestion(currentQuestionIndex);
   }
 }
 
@@ -203,12 +167,14 @@ function checkAnswer(option, correctAnswer) {
   if (option === correctAnswer) {
     score++;
   }
-  alert(`Your Current score is ${score} / ${quizQuestionsList.length}.`);
+
+  document.querySelector('.current-score').innerHTML = `Your Current score is ${score} / ${quizQuestionsList.length}.`
+
   selectedOption++;
   currentQuestionIndex++;
+  
   showResult();
   questionHtml(currentQuestionIndex);
-  console.log(selectedOption);
 }
 
 ShowQuestion();
