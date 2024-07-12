@@ -119,6 +119,7 @@ function questionHtml(questionIdex) {
 
   const optionA =
     quizQuestionsList[questionIdex].options.find((opt) => opt.a) || {};
+  console.log(optionA);
   const optionB =
     quizQuestionsList[questionIdex].options.find((opt) => opt.b) || {};
   const optionC =
@@ -131,18 +132,22 @@ function questionHtml(questionIdex) {
       <p>Question ${questionIdex + 1} of ${quizQuestionsList.length}:</p> 
       <p class="title">${quizQuestionsList[questionIdex].title}</p>
       <div class="quiz-options">
-        A. <button class="btn" onclick="checkAnswer('${optionA.a}', '${
-    quizQuestionsList[questionIdex].correctAnswer
-  }')">${optionA.a}</button><br>
-        B. <button class="btn" onclick="checkAnswer('${optionB.b}', '${
-    quizQuestionsList[questionIdex].correctAnswer
-  }')">${optionB.b}</button><br>
-        C. <button class="btn" onclick="checkAnswer('${optionC.c}', '${
-    quizQuestionsList[questionIdex].correctAnswer
-  }')">${optionC.c}</button><br>
-        D. <button class="btn" onclick="checkAnswer('${optionD.d}', '${
-    quizQuestionsList[questionIdex].correctAnswer
-  }')">${optionD.d}</button><br>
+        A. <input type="radio" name="option" value=${optionA.correct}>${
+    optionA.a
+  } </span><br>
+        B. <input type="radio" name="option" value="${optionA.correct}">${
+    optionB.b
+  }</span><br>
+        C. <input type="radio" name="option" value="${optionA.correct}">${
+    optionC.c
+  }</span><br>
+        D. <input type="radio" name="option" value="${optionA.correct}">${
+    optionD.d
+  }</span><br>
+        <div class="button-container">
+          <button class="previous-btn" onclick='previousBtn("${questionIdex}")'>Previous</button>
+          <button class="next-btn" onclick='checkAnswer("${questionIdex}")'>Next</button>
+        </div>
       </div>
     </div>`;
 
@@ -163,16 +168,32 @@ function showResult() {
   }
 }
 
-function checkAnswer(option, correctAnswer) {
-  if (option === correctAnswer) {
+function previousBtn(questionIdex) {
+  if (questionIdex !== 0) {
+    questionIdex--;
+    questionHtml(questionIdex);
+  } else {
+    document.querySelector('.previous-btn').disabled = true
+  }
+}
+
+function checkAnswer(questionIdex) {
+  let selectedRadioBtn = document.getElementsByName("option");
+  let selectedOptionValue;
+
+  for (i = 0; i < selectedRadioBtn.length; i++) {
+    if (selectedRadioBtn[i].checked) {
+      selectedOptionValue = selectedRadioBtn[i].value;
+    }
+  }
+
+  if (selectedOptionValue === "true") {
     score++;
   }
 
-  document.querySelector('.current-score').innerHTML = `Your Current score is ${score} / ${quizQuestionsList.length}.`
-
   selectedOption++;
   currentQuestionIndex++;
-  
+
   showResult();
   questionHtml(currentQuestionIndex);
 }
